@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>HTTPS抓包 | The road to growth</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="前端,前端开发,frontend,nodejs,JavaScript" />
+  
+
+  <meta name="description" content="前序：http协议运行在TCP之上，所有传输的内容都是明文，客户端和服务器端都无法验证对方的身份；  https是运行在ssl/tls之上的http协议，ssl/tls运行在tcp之上。所有传输的内容都经过加密，加密采用对称加密，但对称加密的密钥用服务器方的证书进行了非对称加密。tls/ssl中使用了非对称加密，对称加密以及hash算法。 现在很多网站为了安全，都采用了绿色链接，那对于很多开发者">
+<meta name="keywords" content="js(es6+),css,React,Vue,Node">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTPS抓包">
+<meta property="og:url" content="http://yoursite.com/2018/06/01/HTTPS抓包/index.html">
+<meta property="og:site_name" content="The road to growth">
+<meta property="og:description" content="前序：http协议运行在TCP之上，所有传输的内容都是明文，客户端和服务器端都无法验证对方的身份；  https是运行在ssl/tls之上的http协议，ssl/tls运行在tcp之上。所有传输的内容都经过加密，加密采用对称加密，但对称加密的密钥用服务器方的证书进行了非对称加密。tls/ssl中使用了非对称加密，对称加密以及hash算法。 现在很多网站为了安全，都采用了绿色链接，那对于很多开发者">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2018/06/themes/fexo/images/img1.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/themes/fexo/images/img2.png">
+<meta property="og:updated_time" content="2018-06-01T12:17:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTTPS抓包">
+<meta name="twitter:description" content="前序：http协议运行在TCP之上，所有传输的内容都是明文，客户端和服务器端都无法验证对方的身份；  https是运行在ssl/tls之上的http协议，ssl/tls运行在tcp之上。所有传输的内容都经过加密，加密采用对称加密，但对称加密的密钥用服务器方的证书进行了非对称加密。tls/ssl中使用了非对称加密，对称加密以及hash算法。 现在很多网站为了安全，都采用了绿色链接，那对于很多开发者">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/themes/fexo/images/img1.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#先用socket模块，在代理端口监听，一旦有客户端连接就新开一个线程处理连接"><span class="toc-text">先用socket模块，在代理端口监听，一旦有客户端连接就新开一个线程处理连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#手机中设置代理，这一步和抓http的方式一样。"><span class="toc-text">手机中设置代理，这一步和抓http的方式一样。</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-HTTPS抓包" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">HTTPS抓包</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.06.01</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>晴天</span>
+        </span>
+      
+
+      
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://github.com/zhouzefei/zhouzefei.github.io/2018/06/01/HTTPS抓包/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <blockquote>
+<p>前序：http协议运行在TCP之上，所有传输的内容都是明文，客户端和服务器端都无法验证对方的身份；</p>
+</blockquote>
+<p>https是运行在ssl/tls之上的http协议，ssl/tls运行在tcp之上。所有传输的内容都经过加密，加密采用对称加密，但对称加密的密钥用服务器方的证书进行了非对称加密。tls/ssl中使用了非对称加密，对称加密以及hash算法。</p>
+<p>现在很多网站为了安全，都采用了绿色链接，那对于很多开发者，可能想看一些信息，或者对一些线上问题的排查就产生了一定的困扰，所以本文就讲一下如何利用charles对https抓包？</p>
+<p>解决思想</p>
+<ul>
+<li><p>charles官网提供了一个根证书，并且可以自动根据charles生成一个签名的服务器证书。</p>
+</li>
+<li><p>客户端上安装好这个根证书，然后让操作系统信任他。</p>
+</li>
+</ul>
+<p>总结：<code>charles</code> 扮演一个代理服务器，那么所有客户端请求的服务器证书就是 <code>charles</code> 自动生成的代理服务器证书。如果 <code>charles</code> 的根证书已被信任，这个自动生成的代理服务器证书是有效的，那么客户端和 <code>charles</code> 的 <code>tls</code> 握手就可以顺利完成。</p>
+<p>操作步骤</p>
+<h2 id="先用socket模块，在代理端口监听，一旦有客户端连接就新开一个线程处理连接"><a href="#先用socket模块，在代理端口监听，一旦有客户端连接就新开一个线程处理连接" class="headerlink" title="先用socket模块，在代理端口监听，一旦有客户端连接就新开一个线程处理连接"></a>先用socket模块，在代理端口监听，一旦有客户端连接就新开一个线程处理连接</h2><p>混合代理判断数据包是http还是https的唯一方法,就是浏览器器如果发送https包,在传输前会先向代理发送一个CONNECT请求,通过第一个数据包,可以判断接下来的数据是https还是http包。</p>
+<p><img src="../../themes/fexo/images/img1.png" align="center"></p>
+<p><img src="../../themes/fexo/images/img2.png" align="center"></p>
+<h2 id="手机中设置代理，这一步和抓http的方式一样。"><a href="#手机中设置代理，这一步和抓http的方式一样。" class="headerlink" title="手机中设置代理，这一步和抓http的方式一样。"></a>手机中设置代理，这一步和抓http的方式一样。</h2><p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:36:44.png</p>
+<p>3、安装证书。(这一步必须建立在第二步的基础上，否则手机中无法下载charles根证书)<br>3.1手机上安装charles根证书。<br>在手机浏览器中打开charles根证书下载网址：chls.pro/ssl 。</p>
+<p>会出现这样的界面，点击继续安装，然后去设置里的描述文件管理中信任。</p>
+<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:39:5.png</p>
+<p>3.2电脑上安装根证书<br>在charles的help菜单中安装；完成后去系统的钥匙串访问中信任；</p>
+<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:43:40.png</p>
+<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:44:22.png</p>
+<p>如果有小伙伴在这一步出现了问题，如：</p>
+<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2018-1-2 20:35:12.png</p>
+<p>或者在钥匙串中，找不到证书，可以尝试如下操作：</p>
+<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2018-1-2 20:36:13.png</p>
+<p>再重复：</p>
+<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:43:40.png</p>
+<p>然后去系统的钥匙串访问中信任</p>
+<p>4、添加要监视的域名。<br>以卖好车线上金融项目为例，<a href="https://faw.maihaoche.com/" target="_blank" rel="noopener">https://faw.maihaoche.com/</a></p>
+<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:47:9.png</p>
+<p>前端团队 &gt; 20170824_晴天<em>代理之 HTTPS 证书 &gt; image2017-8-24 14:51:6.png前端团队 &gt; 20170824</em>晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:47:51.png</p>
+<p>这里的端口号在第一步中已经添加默认端口号80,443,8080，所以无需配置</p>
+<p> 添加完成之后我们就可以对已经添加域名的https协议尽情的抓包了，如下：</p>
+<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:50:33.png</p>
+<p>抓包中遇到的问题：</p>
+<p>1、出现这种如下情况：如果你的客户端和pc的证书都认证通过，请检查是否对域名进行监视，如果证书未通过请从第一步开始</p>
+<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:53:54.png</p>
+<p>2、出现这种情况，请检查你的手机是否信任；</p>
+<p>ios手机10.0以上需要操作：设置–&gt;通用–&gt;关于本机–&gt;证书信任设置</p>
+<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:56:31.png</p>
+
+    
+  </div>
+
+  
+      <div class="git"></div>
+  
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持晴天</div>
+        <ul>
+        
+          <li class="item">
+            <span>微信扫一扫</span>
+            <img src="/images/wechat.png" alt=""／>
+          </li>
+        
+          <li class="item">
+            <span>支付宝扫一扫</span>
+            <img src="/images/aliPay.png" alt=""／>
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/10/11/chrome_debug/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'qingtian';
+    
+    var disqus_url = 'http://yoursite.com/2018/06/01/HTTPS抓包/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//qingtian.disqus.com/count.js" async></script>
+
+
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <div id="comment" class="vcomment" ></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "",
+            appKey: "",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+  
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
