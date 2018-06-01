@@ -23,13 +23,24 @@
 <meta property="og:site_name" content="The road to growth">
 <meta property="og:description" content="前序：http协议运行在TCP之上，所有传输的内容都是明文，客户端和服务器端都无法验证对方的身份；  https是运行在ssl/tls之上的http协议，ssl/tls运行在tcp之上。所有传输的内容都经过加密，加密采用对称加密，但对称加密的密钥用服务器方的证书进行了非对称加密。tls/ssl中使用了非对称加密，对称加密以及hash算法。 现在很多网站为了安全，都采用了绿色链接，那对于很多开发者">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2018/06/themes/fexo/images/img1.png">
-<meta property="og:image" content="http://yoursite.com/2018/06/themes/fexo/images/img2.png">
-<meta property="og:updated_time" content="2018-06-01T12:17:44.000Z">
+<meta property="og:image" content="http://yoursite.com/images/img1.png">
+<meta property="og:image" content="http://yoursite.com/images/img2.png">
+<meta property="og:image" content="http://yoursite.com/images/img3.png">
+<meta property="og:image" content="http://yoursite.com/images/img4.png">
+<meta property="og:image" content="http://yoursite.com/images/img5.png">
+<meta property="og:image" content="http://yoursite.com/images/img6.png">
+<meta property="og:image" content="http://yoursite.com/images/img7.png">
+<meta property="og:image" content="http://yoursite.com/images/img8.png">
+<meta property="og:image" content="http://yoursite.com/images/img9.png">
+<meta property="og:image" content="http://yoursite.com/images/img10.png">
+<meta property="og:image" content="http://yoursite.com/images/img11.png">
+<meta property="og:image" content="http://yoursite.com/images/img13.png">
+<meta property="og:image" content="http://yoursite.com/images/img14.png">
+<meta property="og:updated_time" content="2018-06-01T12:55:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTPS抓包">
 <meta name="twitter:description" content="前序：http协议运行在TCP之上，所有传输的内容都是明文，客户端和服务器端都无法验证对方的身份；  https是运行在ssl/tls之上的http协议，ssl/tls运行在tcp之上。所有传输的内容都经过加密，加密采用对称加密，但对称加密的密钥用服务器方的证书进行了非对称加密。tls/ssl中使用了非对称加密，对称加密以及hash算法。 现在很多网站为了安全，都采用了绿色链接，那对于很多开发者">
-<meta name="twitter:image" content="http://yoursite.com/2018/06/themes/fexo/images/img1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/img1.png">
 
   
 
@@ -122,7 +133,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#先用socket模块，在代理端口监听，一旦有客户端连接就新开一个线程处理连接"><span class="toc-text">先用socket模块，在代理端口监听，一旦有客户端连接就新开一个线程处理连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#手机中设置代理，这一步和抓http的方式一样。"><span class="toc-text">手机中设置代理，这一步和抓http的方式一样。</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#解决思想"><span class="toc-text">解决思想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作步骤"><span class="toc-text">操作步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、先用socket模块，在代理端口监听，一旦有客户端连接就新开一个线程处理连接"><span class="toc-text">1、先用socket模块，在代理端口监听，一旦有客户端连接就新开一个线程处理连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、手机中设置代理，这一步和抓http的方式一样。"><span class="toc-text">2、手机中设置代理，这一步和抓http的方式一样。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、安装证书。-这一步必须建立在第二步的基础上，否则手机中无法下载charles根证书"><span class="toc-text">3、安装证书。(这一步必须建立在第二步的基础上，否则手机中无法下载charles根证书)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1、手机上安装charles根证书。"><span class="toc-text">3.1、手机上安装charles根证书。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2、电脑上安装根证书"><span class="toc-text">3.2、电脑上安装根证书</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、添加要监视的域名。"><span class="toc-text">4、添加要监视的域名。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、常见问题"><span class="toc-text">5、常见问题</span></a></li></ol></li></ol>
   </div>
 
 
@@ -173,44 +184,43 @@
 </blockquote>
 <p>https是运行在ssl/tls之上的http协议，ssl/tls运行在tcp之上。所有传输的内容都经过加密，加密采用对称加密，但对称加密的密钥用服务器方的证书进行了非对称加密。tls/ssl中使用了非对称加密，对称加密以及hash算法。</p>
 <p>现在很多网站为了安全，都采用了绿色链接，那对于很多开发者，可能想看一些信息，或者对一些线上问题的排查就产生了一定的困扰，所以本文就讲一下如何利用charles对https抓包？</p>
-<p>解决思想</p>
-<ul>
-<li><p>charles官网提供了一个根证书，并且可以自动根据charles生成一个签名的服务器证书。</p>
-</li>
-<li><p>客户端上安装好这个根证书，然后让操作系统信任他。</p>
-</li>
+<h2 id="解决思想"><a href="#解决思想" class="headerlink" title="解决思想"></a>解决思想</h2><ul>
+<li>charles官网提供了一个根证书，并且可以自动根据charles生成一个签名的服务器证书。</li>
+<li>客户端上安装好这个根证书，然后让操作系统信任他。</li>
 </ul>
+<blockquote>
 <p>总结：<code>charles</code> 扮演一个代理服务器，那么所有客户端请求的服务器证书就是 <code>charles</code> 自动生成的代理服务器证书。如果 <code>charles</code> 的根证书已被信任，这个自动生成的代理服务器证书是有效的，那么客户端和 <code>charles</code> 的 <code>tls</code> 握手就可以顺利完成。</p>
-<p>操作步骤</p>
-<h2 id="先用socket模块，在代理端口监听，一旦有客户端连接就新开一个线程处理连接"><a href="#先用socket模块，在代理端口监听，一旦有客户端连接就新开一个线程处理连接" class="headerlink" title="先用socket模块，在代理端口监听，一旦有客户端连接就新开一个线程处理连接"></a>先用socket模块，在代理端口监听，一旦有客户端连接就新开一个线程处理连接</h2><p>混合代理判断数据包是http还是https的唯一方法,就是浏览器器如果发送https包,在传输前会先向代理发送一个CONNECT请求,通过第一个数据包,可以判断接下来的数据是https还是http包。</p>
-<p><img src="../../themes/fexo/images/img1.png" align="center"></p>
-<p><img src="../../themes/fexo/images/img2.png" align="center"></p>
-<h2 id="手机中设置代理，这一步和抓http的方式一样。"><a href="#手机中设置代理，这一步和抓http的方式一样。" class="headerlink" title="手机中设置代理，这一步和抓http的方式一样。"></a>手机中设置代理，这一步和抓http的方式一样。</h2><p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:36:44.png</p>
-<p>3、安装证书。(这一步必须建立在第二步的基础上，否则手机中无法下载charles根证书)<br>3.1手机上安装charles根证书。<br>在手机浏览器中打开charles根证书下载网址：chls.pro/ssl 。</p>
+</blockquote>
+<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="1、先用socket模块，在代理端口监听，一旦有客户端连接就新开一个线程处理连接"><a href="#1、先用socket模块，在代理端口监听，一旦有客户端连接就新开一个线程处理连接" class="headerlink" title="1、先用socket模块，在代理端口监听，一旦有客户端连接就新开一个线程处理连接"></a>1、先用socket模块，在代理端口监听，一旦有客户端连接就新开一个线程处理连接</h3><p>混合代理判断数据包是http还是https的唯一方法,就是浏览器器如果发送https包,在传输前会先向代理发送一个CONNECT请求,通过第一个数据包,可以判断接下来的数据是https还是http包。</p>
+<p><img src="/images/img1.png" align="center" style=" height:300px"></p>
+<p><img src="/images/img2.png" align="center" style="height:300px;"></p>
+<h3 id="2、手机中设置代理，这一步和抓http的方式一样。"><a href="#2、手机中设置代理，这一步和抓http的方式一样。" class="headerlink" title="2、手机中设置代理，这一步和抓http的方式一样。"></a>2、手机中设置代理，这一步和抓http的方式一样。</h3><p><img src="/images/img3.png" align="center" style="height:300px;"></p>
+<h3 id="3、安装证书。-这一步必须建立在第二步的基础上，否则手机中无法下载charles根证书"><a href="#3、安装证书。-这一步必须建立在第二步的基础上，否则手机中无法下载charles根证书" class="headerlink" title="3、安装证书。(这一步必须建立在第二步的基础上，否则手机中无法下载charles根证书)"></a>3、安装证书。(这一步必须建立在第二步的基础上，否则手机中无法下载charles根证书)</h3><h4 id="3-1、手机上安装charles根证书。"><a href="#3-1、手机上安装charles根证书。" class="headerlink" title="3.1、手机上安装charles根证书。"></a>3.1、手机上安装charles根证书。</h4><p>在手机浏览器中打开charles根证书下载网址：<a href="https://chls.pro/ssl/" target="_blank" rel="noopener">chls.pro/ssl</a> 。</p>
 <p>会出现这样的界面，点击继续安装，然后去设置里的描述文件管理中信任。</p>
-<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:39:5.png</p>
-<p>3.2电脑上安装根证书<br>在charles的help菜单中安装；完成后去系统的钥匙串访问中信任；</p>
-<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:43:40.png</p>
-<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:44:22.png</p>
+<p><img src="/images/img4.png" align="center" style="width:300px;"></p>
+<h4 id="3-2、电脑上安装根证书"><a href="#3-2、电脑上安装根证书" class="headerlink" title="3.2、电脑上安装根证书"></a>3.2、电脑上安装根证书</h4><p>在charles的help菜单中安装；完成后去系统的钥匙串访问中信任；</p>
+<p><img src="/images/img5.png" align="center" style="height:300px;"></p>
+<p><img src="/images/img6.png" align="center" style="height:200px;"></p>
 <p>如果有小伙伴在这一步出现了问题，如：</p>
-<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2018-1-2 20:35:12.png</p>
+<p><img src="/images/img7.png" align="center" style="height:170px;"></p>
 <p>或者在钥匙串中，找不到证书，可以尝试如下操作：</p>
-<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2018-1-2 20:36:13.png</p>
+<p><img src="/images/img8.png" align="center" style="height:200px;"></p>
 <p>再重复：</p>
-<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:43:40.png</p>
+<p><img src="/images/img9.png" align="center" style="height:200px;"></p>
 <p>然后去系统的钥匙串访问中信任</p>
-<p>4、添加要监视的域名。<br>以卖好车线上金融项目为例，<a href="https://faw.maihaoche.com/" target="_blank" rel="noopener">https://faw.maihaoche.com/</a></p>
-<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:47:9.png</p>
-<p>前端团队 &gt; 20170824_晴天<em>代理之 HTTPS 证书 &gt; image2017-8-24 14:51:6.png前端团队 &gt; 20170824</em>晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:47:51.png</p>
+<h3 id="4、添加要监视的域名。"><a href="#4、添加要监视的域名。" class="headerlink" title="4、添加要监视的域名。"></a>4、添加要监视的域名。</h3><p><img src="/images/img10.png" align="center" style="height:270px;"></p>
+<p><img src="/images/img11.png" align="center" style="height:200px;"></p>
 <p>这里的端口号在第一步中已经添加默认端口号80,443,8080，所以无需配置</p>
-<p> 添加完成之后我们就可以对已经添加域名的https协议尽情的抓包了，如下：</p>
-<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:50:33.png</p>
-<p>抓包中遇到的问题：</p>
-<p>1、出现这种如下情况：如果你的客户端和pc的证书都认证通过，请检查是否对域名进行监视，如果证书未通过请从第一步开始</p>
-<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:53:54.png</p>
-<p>2、出现这种情况，请检查你的手机是否信任；</p>
+<p><strong> 添加完成之后我们就可以对已经添加域名的https协议尽情的抓包了。 </strong></p>
+<h3 id="5、常见问题"><a href="#5、常见问题" class="headerlink" title="5、常见问题"></a>5、常见问题</h3><ul>
+<li>出现这种如下情况：如果你的客户端和pc的证书都认证通过，请检查是否对域名进行监视，如果证书未通过请从第一步开始</li>
+</ul>
+<p><img src="/images/img13.png" align="center" style="width:300px;"></p>
+<ul>
+<li>出现这种情况，请检查你的手机是否信任；</li>
+</ul>
 <p>ios手机10.0以上需要操作：设置–&gt;通用–&gt;关于本机–&gt;证书信任设置</p>
-<p>前端团队 &gt; 20170824_晴天_代理之 HTTPS 证书 &gt; image2017-8-24 14:56:31.png</p>
+<p><img src="/images/img14.png" align="center" style="width:300px;"></p>
 
     
   </div>
