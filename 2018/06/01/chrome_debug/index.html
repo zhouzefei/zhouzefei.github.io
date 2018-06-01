@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>周泽飞1 | The road to growth</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="前端,前端开发,frontend,nodejs,JavaScript" />
+  
+
+  <meta name="description" content="前序：DevTools使开发者更加深入的了解浏览器内部以及编写的应用。通过它我们可以高效的定位页面布局、页面报错。今天我们就来一起实践如何使用好devtools这把利剑。   ####在开始之前我们先来了解一下chrome中的快捷键： 功能快捷键cmd + opt + i打开devtools；c是审查元素；j是控制台；cmd + o文件检索；cmd + shift + o定位到文件内css规则或">
+<meta name="keywords" content="js(es6+),css,React,Vue,Node">
+<meta property="og:type" content="article">
+<meta property="og:title" content="周泽飞1">
+<meta property="og:url" content="http://yoursite.com/2018/06/01/chrome_debug/index.html">
+<meta property="og:site_name" content="The road to growth">
+<meta property="og:description" content="前序：DevTools使开发者更加深入的了解浏览器内部以及编写的应用。通过它我们可以高效的定位页面布局、页面报错。今天我们就来一起实践如何使用好devtools这把利剑。   ####在开始之前我们先来了解一下chrome中的快捷键： 功能快捷键cmd + opt + i打开devtools；c是审查元素；j是控制台；cmd + o文件检索；cmd + shift + o定位到文件内css规则或">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://o9iuh08yr.bkt.clouddn.com/8.png">
+<meta property="og:image" content="http://o9iuh08yr.bkt.clouddn.com/77.gif">
+<meta property="og:image" content="https://developers.google.com/web/tools/chrome-devtools/javascript/imgs/image_8.png">
+<meta property="og:image" content="https://developers.google.com/web/tools/chrome-devtools/javascript/imgs/image_10.png">
+<meta property="og:image" content="https://developers.google.com/web/tools/chrome-devtools/javascript/imgs/image_11.png">
+<meta property="og:image" content="https://developers.google.com/web/tools/chrome-devtools/javascript/imgs/image_13.png">
+<meta property="og:image" content="https://developers.google.com/web/tools/chrome-devtools/javascript/imgs/image_14.png">
+<meta property="og:image" content="http://o9iuh08yr.bkt.clouddn.com/99.gif">
+<meta property="og:image" content="http://o9iuh08yr.bkt.clouddn.com/88.gif">
+<meta property="og:image" content="http://o9iuh08yr.bkt.clouddn.com/12.png">
+<meta property="og:image" content="http://o9iuh08yr.bkt.clouddn.com/14.png">
+<meta property="og:image" content="https://developers.google.com/web/tools/chrome-devtools/network-performance/imgs/timeline-view-hover.png">
+<meta property="og:updated_time" content="2018-06-01T10:48:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="周泽飞1">
+<meta name="twitter:description" content="前序：DevTools使开发者更加深入的了解浏览器内部以及编写的应用。通过它我们可以高效的定位页面布局、页面报错。今天我们就来一起实践如何使用好devtools这把利剑。   ####在开始之前我们先来了解一下chrome中的快捷键： 功能快捷键cmd + opt + i打开devtools；c是审查元素；j是控制台；cmd + o文件检索；cmd + shift + o定位到文件内css规则或">
+<meta name="twitter:image" content="http://o9iuh08yr.bkt.clouddn.com/8.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-chrome_debug" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">周泽飞1</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.06.01</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>晴天</span>
+        </span>
+      
+
+      
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://github.com/zhouzefei/zhouzefei.github.io/2018/06/01/chrome_debug/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <blockquote>
+<p>前序：DevTools使开发者更加深入的了解浏览器内部以及编写的应用。通过它我们可以高效的定位页面布局、页面报错。今天我们就来一起实践如何使用好devtools这把利剑。</p>
+</blockquote>
+<p><br></p>
+<p>####在开始之前我们先来了解一下chrome中的快捷键：</p>
+<table style="border:1px solid #e7e7e7;border-collapse: collapse;"><br><tr><br><td style="border:1px solid #e7e7e7;">功能</td><br><td style="border:1px solid #e7e7e7;">快捷键</td><br></tr><br><tr><br><td style="border:1px solid #e7e7e7;">cmd + opt + i</td><br><td style="border:1px solid #e7e7e7;">打开devtools；c是审查元素；j是控制台；</td><br></tr><br><tr><br><td style="border:1px solid #e7e7e7;">cmd + o</td><br><td style="border:1px solid #e7e7e7;">文件检索；</td><br></tr><br><tr><br><td style="border:1px solid #e7e7e7;">cmd + shift + o</td><br><td style="border:1px solid #e7e7e7;">定位到文件内css规则或者js方法</td><br></tr><br><tr><br><td style="border:1px solid #e7e7e7;">cmd + opt + f</td><br><td style="border:1px solid #e7e7e7;">全局文本搜索</td><br></tr><br></table>
+
+<hr>
+<blockquote>
+<p>下面我从dom、css、js分别阐述一下如何调试</p>
+</blockquote>
+<p>####1.dom</p>
+<p>#####1.1：打开调试面板，选中dom节点右键，选择break on可见如下：<figure class="highlight plain"><figcaption><span>Modifications来调试样式动画效果```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&lt;table style=&quot;border:1px solid #e7e7e7;border-collapse: collapse;&quot;&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">&lt;td style=&quot;border:1px solid #e7e7e7;&quot;&gt;dom断点调试&lt;/td&gt;</span><br><span class="line">&lt;td style=&quot;border:1px solid #e7e7e7;&quot;&gt;方法&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">&lt;td style=&quot;border:1px solid #e7e7e7;&quot;&gt;subtree modifications&lt;/td&gt;</span><br><span class="line">&lt;td style=&quot;border:1px solid #e7e7e7;&quot;&gt;子节点增删改时触发；&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">&lt;td style=&quot;border:1px solid #e7e7e7;&quot;&gt;attributes Modifications&lt;/td&gt;</span><br><span class="line">&lt;td style=&quot;border:1px solid #e7e7e7;&quot;&gt;自身属性发生变化触发&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">&lt;td style=&quot;border:1px solid #e7e7e7;&quot;&gt;Node Removal &lt;/td&gt;</span><br><span class="line">&lt;td style=&quot;border:1px solid #e7e7e7;&quot;&gt;当前移除时触发&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;/table&gt;</span><br><span class="line">#####1.2:source面板 Event Listener Breakpoints</span><br><span class="line">可以选中要调试的事件，复选框选中，在页面区域触发事件即进入断点</span><br><span class="line">&lt;img src=&quot;http://o9iuh08yr.bkt.clouddn.com/1.png&quot; width = &quot;700&quot; alt=&quot;event listener breakpoints&quot; align=center /&gt;</span><br><span class="line"></span><br><span class="line">#####1.3:hover 鼠标略过效果很炫，但是略过获取不到样式。可以如下操作查看：</span><br><span class="line">&lt;img src=&quot;http://o9iuh08yr.bkt.clouddn.com/2.png&quot; width = &quot;700&quot; alt=&quot;hover&quot; align=center /&gt;</span><br><span class="line"></span><br><span class="line">#####1.4:选择元素，在控制台输出$0。可以通过这种方式快速选择元素，或进行$($0)进行‘任意’操作</span><br><span class="line">&lt;img src=&quot;http://o9iuh08yr.bkt.clouddn.com/33.gif&quot; width = &quot;700&quot; alt=&quot;控制台输出$0&quot; align=center /&gt;</span><br><span class="line">&lt;br/&gt;  </span><br><span class="line"></span><br><span class="line">####2.css</span><br><span class="line">#####2.1:加号，点击+号即可添加你当前dom所选的样式进行调试</span><br><span class="line">&lt;img src=&quot;http://o9iuh08yr.bkt.clouddn.com/44.gif&quot; width = &quot;700&quot; align=center /&gt;</span><br><span class="line"></span><br><span class="line">#####2.2:上述的调试一般只存在内存中，页面一刷新就没了，那么我们如何能将我们调试的结果保留？</span><br><span class="line">######映射保存到磁盘(本地文件夹映射到网址)</span><br><span class="line">source-&gt; add folder to workspace(文件夹位置并授权) -&gt;map to file system resource</span><br><span class="line">具体见动图：</span><br><span class="line">&lt;img src=&quot;http://o9iuh08yr.bkt.clouddn.com/55.gif&quot; width = &quot;700&quot; align=center /&gt;</span><br><span class="line"></span><br><span class="line">#####2.3:animation css动画调试[animate]</span><br><span class="line">[animate]:https://daneden.github.io/animate.css/</span><br><span class="line">&lt;img src=&quot;http://o9iuh08yr.bkt.clouddn.com/66.gif&quot; width = &quot;700&quot; align=center /&gt;</span><br><span class="line">&lt;font style=&quot;font-size:15px;color:#f00;&quot;&gt;注意动图中的停顿处。仅对外部css生效; 行内无效,via source修改&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">#####2.4:吸取颜色,看到动图的那个小颜料桶了么？😁</span><br><span class="line">&lt;img src=&quot;http://o9iuh08yr.bkt.clouddn.com/7.gif&quot; width = &quot;300&quot; align=center /&gt;</span><br><span class="line">&lt;br/&gt;</span><br><span class="line"></span><br><span class="line">####3.控制台  &lt;font style=&quot;font-size:14px&quot;&gt;使用它作为shell在页面上与JavaScript交互&lt;/font&gt;</span><br><span class="line">#####3.1:xpath查询语言，$x(xpath,context)执行查询。context是执行上下文的dom元素；类似jq</span><br></pre></td></tr></table></figure></p>
+<p>XPath 使用路径表达式来选取 XML 文档中的节点或节点集<br>$x(‘//img’);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">具体可以查看[xpath],类正则</span><br><span class="line">[xpath]:http://www.w3school.com.cn/xpath/xpath_syntax.asp</span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line">#####3.2:```$0,$1,$2,$_</span><br></pre></td></tr></table></figure></p>
+<p>获取之前选择过的近6个元素</p>
+<p>#####3.3:console家族<br>dir 输出对象的所有属性值，然后你就能在console面板中输入<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">顺带提一下```console.assert(false,&apos;out&apos;)```。有时候我们会```if(x)&#123;console.log(*)&#125;```,```console.assert```就是```if(false)&#123;console.log(*)&#125;</span><br></pre></td></tr></table></figure></p>
+<pre><code>让我们先来看一张图：这个的代码我先贴一波感兴趣的童鞋可以自己去实践一把，我就不一一描述：
+</code></pre><p><img src="http://o9iuh08yr.bkt.clouddn.com/8.png" width="500" align="center"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.groupCollapsed(<span class="string">'console.level的日志'</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'this level is console.log'</span>);</span><br><span class="line">  <span class="comment">//一层嵌套</span></span><br><span class="line">  <span class="built_in">console</span>.group(<span class="string">'debug的日志'</span>);</span><br><span class="line">     <span class="built_in">console</span>.debug(<span class="string">'输出调试信息'</span>);</span><br><span class="line">  <span class="built_in">console</span>.groupEnd();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.info(<span class="string">'this level is console.info'</span>);</span><br><span class="line">  <span class="built_in">console</span>.warn(<span class="string">'this level is console.warn'</span>);</span><br><span class="line">  <span class="built_in">console</span>.error(<span class="string">'this level is console.error'</span>);</span><br><span class="line"><span class="built_in">console</span>.groupEnd();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.dir(<span class="built_in">console</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.group(<span class="string">'console.assert的日志'</span>);</span><br><span class="line">   <span class="built_in">console</span>.assert(<span class="number">2</span>&gt;<span class="number">1</span>,<span class="string">'2比1大'</span>);</span><br><span class="line">   <span class="built_in">console</span>.assert(<span class="number">1</span>&gt;<span class="number">2</span>,<span class="string">'1&gt;2,出错了'</span>);</span><br><span class="line"><span class="built_in">console</span>.groupEnd();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.table([&#123;<span class="attr">a</span>:<span class="number">1</span>, <span class="attr">b</span>:<span class="number">2</span>, <span class="attr">c</span>:<span class="number">3</span>&#125;, &#123;<span class="attr">a</span>:<span class="string">"foo"</span>, <span class="attr">b</span>:<span class="literal">false</span>,<span class="attr">c</span>:<span class="literal">undefined</span>&#125;]);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.table(&#123; <span class="string">'dog'</span>:&#123;<span class="string">'age'</span>:<span class="number">20</span>,<span class="string">'sex'</span>:<span class="string">'girl'</span>,<span class="string">'like'</span>:<span class="string">'eat'</span>&#125;,<span class="string">'cat'</span>:&#123;<span class="string">'age'</span>:<span class="number">11</span>,<span class="string">'sex'</span>:<span class="string">'boy'</span>,<span class="string">'like'</span>:<span class="string">'sleep'</span>&#125;,<span class="string">'mouse'</span>:&#123;<span class="string">'age'</span>:<span class="number">1</span>,<span class="string">'sex'</span>:<span class="string">'boy'</span>,<span class="string">'like'</span>:<span class="string">'drink'</span>&#125; &#125;);</span><br><span class="line">	</span><br><span class="line"><span class="comment">//有样式的</span></span><br><span class="line">%s - 字符串格式</span><br><span class="line">%i 或 %d - 整型格式</span><br><span class="line">%f - 浮点格式</span><br><span class="line">%o - DOM节点</span><br><span class="line">%O - JavaScript 对象</span><br><span class="line">%c - 对输出的字符串使用css样式，样式由第二个参数指定	</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'%s很开心，因为%o是她进卖好车的第%d天,这是她的照片%c'</span>,<span class="string">'晴天'</span>,<span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">1462118400000</span>),<span class="number">1</span>,<span class="string">"padding:50px 50px; background:url('https://avatars1.githubusercontent.com/u/8566935?v=4&amp;s=460') no-repeat; background-size:100% 100%; line-height:140px"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.group(<span class="string">'计时'</span>);</span><br><span class="line">  <span class="built_in">console</span>.time(<span class="string">"数组耗时计费"</span>);</span><br><span class="line">    <span class="keyword">var</span> a = [];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">0</span>; i&lt;<span class="number">10000000</span>; i++)&#123;</span><br><span class="line">        a[i]=i;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="built_in">console</span>.timeEnd(<span class="string">"数组耗时计费"</span>);</span><br><span class="line"><span class="built_in">console</span>.groupEnd();</span><br></pre></td></tr></table></figure>
+<pre><code>很多童鞋可能对mhc的图标ascii码打印比较好奇？
+</code></pre><p>其实很简单，下列两个网址：根据你的实际需求选择一种模式，生成处ascii，然后将生成的ascii中的所有换行符替换成\n，并且将部分转义字符转义即可。建议在sublime中操作，按住alt键，command+d选择可批量处理：</p>
+<ul>
+<li><a href="http://patorjk.com/software/taag/#p=display&amp;f=Alpha&amp;t=mhc" target="_blank" rel="noopener">ascii</a>文字生成ascii</li>
+</ul>
+<p><br></p>
+<ul>
+<li><a href="http://picascii.com/" target="_blank" rel="noopener">pic</a>图片生成ascii</li>
+</ul>
+<p><br></p>
+<p>来个🌰🌰🌰🌰🌰:<br><img src="http://o9iuh08yr.bkt.clouddn.com/77.gif" width="700" align="center"><br><br></p>
+<p>####4.js调试</p>
+<p>#####4.1:断点（设置有条件的断点）</p>
+<blockquote>
+<p>哪些可以打上断点？？<br>一般方法名 对象字面量基本类型的属性 不能打上其它基本都ok</p>
+</blockquote>
+<table style="border:1px solid #e7e7e7;border-collapse: collapse;"><br><tr><br><td style="border:1px solid #e7e7e7;">图标</td><br><td style="border:1px solid #e7e7e7;">描述 </td><br></tr><br><tr><br><td style="border:1px solid #e7e7e7;"><img src="https://developers.google.com/web/tools/chrome-devtools/javascript/imgs/image_8.png"></td><br><td style="border:1px solid #e7e7e7;">继续执行直到下一个断点 </td><br></tr><br><tr><br><td style="border:1px solid #e7e7e7;"><img src="https://developers.google.com/web/tools/chrome-devtools/javascript/imgs/image_10.png"></td><br><td style="border:1px solid #e7e7e7;">不管下一行发生什么都会执行，并跳转到下一行</td><br></tr><br><tr><br><td style="border:1px solid #e7e7e7;"><img src="https://developers.google.com/web/tools/chrome-devtools/javascript/imgs/image_11.png"></td><br><td style="border:1px solid #e7e7e7;">如果下一行包含一个函数调用，Step Into 将跳转并在其第一行暂停该函数。</td><br></tr><br><tr><br><td style="border:1px solid #e7e7e7;"><img src="https://developers.google.com/web/tools/chrome-devtools/javascript/imgs/image_13.png"></td><br><td style="border:1px solid #e7e7e7;">暂时停用所有断点。用于继续完整执行，不会真正移除断点</td><br></tr><br><tr><br><td style="border:1px solid #e7e7e7;"><img src="https://developers.google.com/web/tools/chrome-devtools/javascript/imgs/image_14.png"></td><br><td style="border:1px solid #e7e7e7;">在发生异常时，自动暂停执行代码</td><br></tr><br></table>
+
+<p>#####4.2:<font style="color:#f00">js文件中如何打断点？？？</font><br>    断点可以设置条件？js文件中直接修改查看结果？具体请看下图操作：<br><img src="http://o9iuh08yr.bkt.clouddn.com/99.gif" width="700" align="center"></p>
+<p>#####4.3:经常我们打断点的时候会进入到第三方库、例如jquery，但是我们只希望在自己的js文件中打断点，那么怎么处理？<br>    拉黑操作。blackbox script把你不要打断点的js文件放入黑箱</p>
+<p><img src="http://o9iuh08yr.bkt.clouddn.com/88.gif" width="700" align="center"></p>
+<p>#####4.4:线上bug调试；混淆？压缩？</p>
+<pre><code>方法1:系统偏好设置 -&gt; 网络 -&gt; 高级 -&gt; 代理 ，代理到本地
+方法2:source maps，开启浏览器Enable JavaScript source maps，目前只支持chrome
+</code></pre><p>#####4.5:代码小书签 snippets, History(版本管理)<br><img src="http://o9iuh08yr.bkt.clouddn.com/12.png" width="700" align="center"></p>
+<p><img src="http://o9iuh08yr.bkt.clouddn.com/14.png" width="700" align="center"><br><br></p>
+<p>####5.NetWrok<br>DOMContentLoaded 和 load</p>
+<pre><code>DOMContentLoaded解析页面初始标记：
+   1. overview窗格中的蓝色竖线表示事件
+   2. summary中的确切时间
+
+
+load页面完全加载完成标记：
+   1. overview窗格中的红色竖线
+   2. requestTable中的红色竖线
+   3. summary中的时间
+</code></pre><p>TTFB:Time To First Byte(request sent至收到服务器发出的首字节的时间)<br><img src="https://developers.google.com/web/tools/chrome-devtools/network-performance/imgs/timeline-view-hover.png" alt=""></p>
+<p>Initial connection：初始化连接<br>结果：<br>大片绿：客户端与服务端之间的网络条件差或者服务器应用响应慢<br>大片蓝：文件太大发送的字节数太多<br>下载HTTP响应的时间（包含头部和响应体）<br>通过条件Get请求，对比If-Modified-Since和Last-Modified时间，确定是否使用缓存中的组件，服务器会返回“304 Not Modified”状态码，减小响应的大小；</p>
+<p><br></p>
+<p>🌹🌹🌹🌹🌹<br>&nbsp;<br>that’s all! thank you!</p>
+
+    
+  </div>
+
+  
+      <div class="git"></div>
+  
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持晴天</div>
+        <ul>
+        
+          <li class="item">
+            <span>微信扫一扫</span>
+            <img src="/images/wechat.png" alt=""／>
+          </li>
+        
+          <li class="item">
+            <span>支付宝扫一扫</span>
+            <img src="/images/aliPay.png" alt=""／>
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="hide pull-left" href="/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'qingtian';
+    
+    var disqus_url = 'http://yoursite.com/2018/06/01/chrome_debug/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//qingtian.disqus.com/count.js" async></script>
+
+
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <div id="comment" class="vcomment" ></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "",
+            appKey: "",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+  
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
